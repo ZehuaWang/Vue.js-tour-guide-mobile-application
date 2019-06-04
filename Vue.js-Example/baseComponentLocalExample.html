@@ -12,7 +12,7 @@
 	</div>
 
 	<script type="text/javascript">
-		
+		// Create a component object 
 		var clickComponent = {
 		    data: function() {return {count: 0}
 			},
@@ -21,6 +21,7 @@
 
 		var vm = new Vue({
 		   el: '#component_test',
+		   // bind the componenet with a instance instead of the gloabl Vue
 		   components:{
 		      'testcomponent': clickComponent
 		   }
