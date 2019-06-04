@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TODO List</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	
+	<div id="app">
+		
+		<!-- 数据双向绑定 -->
+		<input type="text" v-model="inputValue">
+		<!-- 绑定事件-->
+		<button v-on:click="handleBtnClick">Submit</button>
+		<ul>
+			<!-- 循环 list中的数据-->
+			<li v-for="item in list">{{item}}</li>
+		</ul>
+
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app', //实例管理的id
+			data: {
+				list: [],
+				inputValue: ''
+			},
+			methods:{
+				handleBtnClick: function() {
+					//alert('click');
+					this.list.push(this.inputValue);
+					alert(this.inputValue);
+					this.inputValue = ''; //清空输入框
+				}
+			}	
+		})
+	</script>
+
+</body>
+</html>
