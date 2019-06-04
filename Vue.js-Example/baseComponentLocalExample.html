@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Base Component - Local Registration</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	
+	<div id="component_test">
+		   <testcomponent></testcomponent>
+	</div>
+
+	<script type="text/javascript">
+		
+		var clickComponent = {
+		    data: function() {return {count: 0}
+			},
+			template: '<button v-on:click="count++">You clicked me {{ count }} times</button>'
+		}
+
+		var vm = new Vue({
+		   el: '#component_test',
+		   components:{
+		      'testcomponent': clickComponent
+		   }
+		});
+
+	</script>
+
+</body>
+</html>
