@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Base Component</title>
+	<title>Base Component - Gloal Registration</title>
 	<script src="./vue.js"></script>
 </head>
 <body>
@@ -19,7 +19,7 @@
 
 	<script type="text/javascript">
 		
-		// Register the component
+		// Register the component This is a global registration
 		Vue.component('button-counter', {
 			data: function() {
 				return {
@@ -28,6 +28,7 @@
 			},
 			template: '<button v-on:click="count++">You clicked me {{ count }} times</button>'
 		})
+
 		// Create a Vue Instance
 		var app = new Vue({el: '#components-demo'})
 	</script>
