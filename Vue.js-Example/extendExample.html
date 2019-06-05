@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Extend</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	
+	<script type="text/javascript">
+		
+		var _obj = {fname: "Raj", lname: "Singh"};
+
+		// direct instance creation
+		var vm = new Vue({
+			data: _obj
+		});
+
+		console.log(vm.fname);
+		console.log(vm.$data);
+		console.log(vm.$data.fname);
+
+		var Component = Vue.extend({
+			data: function() {
+				return _obj
+			}
+		})
+
+		var myComponentInstance = new Component();
+		console.log(myComponentInstance.lname);
+		console.log(myComponentInstance.$data);
+
+	</script>
+
+</body>
+</html>
