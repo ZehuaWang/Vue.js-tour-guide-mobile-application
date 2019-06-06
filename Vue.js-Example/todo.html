@@ -10,19 +10,40 @@
 	<div id="app">
 		
 		<!-- 数据双向绑定 -->
+		<!-- Vue的实例是一个父组件-->
 		<input type="text" v-model="inputValue">
 		<!-- 绑定事件-->
 		<button v-on:click="handleBtnClick">Submit</button>
 		<ul>
 			<!-- 循环 list中的数据-->
-			<li v-for="item in list">{{item}}</li>
+			<!-- <li v-for="item in list">{{item}}</li> -->
+			<!-- v-bind:content 将数据绑定到子组件 -->
+			<todo-item v-bind:content="item" v-for="item in list"></todo-item>
 		</ul>
 
 	</div>
 
 	<script type="text/javascript">
+
+		// 创建全局的组件
+		//Vue.component("TodoItem", {
+			//接收传过来的值
+		//	props: ['content'],
+		//	template: "<li>{{content}}</li>"
+		//})
+
+		// 定义局部组件
+		var TodoItem = {
+			props: ['content'],
+			template: "<li>{{content}}</li>"
+		}
+
+
 		var app = new Vue({
 			el: '#app', //实例管理的id
+			components: {
+				TodoItem: TodoItem
+			},
 			data: {
 				list: [],
 				inputValue: ''
