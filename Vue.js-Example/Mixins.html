@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Mixins</title>
+</head>
+<body>
+	<!-- As defined in Wikipedia, a mixin is a class that contains methods for use by other classes without having to be the parent class of those other classes. -->
+	<script type="text/javascript">
+		// mixin
+		let sayHiMixin = {
+			sayHi() {
+				alert(`Hello ${this.name}`);
+			},
+			sayBye() {
+				alert(`Bye ${this.name}`);
+			}
+		}
+
+		// usage
+		class User {
+			constructor(name) {
+				this.name = name;
+			}
+		}
+
+		// copy the methods -> TODO: Why use prototype here
+		Object.assign(User.prototype, sayHiMixin);
+
+		new User("Eric").sayHi();
+
+	</script>
+</body>
+</html>
