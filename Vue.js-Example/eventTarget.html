@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Event Target</title>
+	<style>
+		form {
+		  background-color: green;
+		  position: relative;
+		  width: 150px;
+		  height: 150px;
+		  text-align: center;
+		  cursor: pointer;
+		}
+
+		div {
+		  background-color: blue;
+		  position: absolute;
+		  top: 25px;
+		  left: 25px;
+		  width: 100px;
+		  height: 100px;
+		}
+
+		p {
+		  background-color: red;
+		  position: absolute;
+		  top: 25px;
+		  left: 25px;
+		  width: 50px;
+		  height: 50px;
+		  line-height: 50px;
+		  margin: 0;
+		}
+
+		body {
+		  line-height: 25px;
+		  font-size: 16px;
+		}	
+	</style>
+</head>
+<body>
+	<!-- Event Target -->	
+	<!-- A handler on a parent element can always get the details about where it actually happened. -->
+	<!-- The most deeply nested element that caused the event is called a target element, accessible as event.target -->
+	<!-- event.target – is the “target” element that initiated the event, it doesn’t change through the bubbling process. -->
+	<!-- this – is the “current” element, the one that has a currently running handler on it. -->
+	A click shows both <code>event.target</code> and <code>this</code> to compare:
+	
+	<form id="form">FORM
+    	<div>DIV
+      		<p>P</p>
+    	</div>
+    </form>
+
+	<script type="text/javascript">
+		form.onclick = function(event) {
+			event.target.style.backgroundColor = 'yellow';
+
+			setTimeout(() => {
+				alert("target = " + event.target.tagName + ", this = " + this.tagName);
+				event.target.style.backgroundColor = ''
+			}, 0);
+		}
+	</script>
+	
+
+</body>
+</html>
