@@ -10,7 +10,7 @@
 	<div id="app">
 		
 		<!-- 数据双向绑定 -->
-		<!-- Vue的实例是一个父组件-->
+		<!-- Vue的实例是一个父组-->
 		<input type="text" v-model="inputValue">
 		<!-- 绑定事件-->
 		<button v-on:click="handleBtnClick">Submit</button>
@@ -18,7 +18,8 @@
 			<!-- 循环 list中的数据-->
 			<!-- <li v-for="item in list">{{item}}</li> -->
 			<!-- v-bind:content 将数据绑定到子组件 -->
-			<todo-item v-bind:content="item" v-for="item in list"></todo-item>
+			<!-- @delete = v-on 监听delete事件 然后触发handleItemDelete事件-->
+			<todo-item :content="item" v-bind:index="index" v-for="(item,index) in list" @delete="handleItemDelete"></todo-item>
 		</ul>
 
 	</div>
@@ -34,10 +35,15 @@
 
 		// 定义局部组件
 		var TodoItem = {
-			props: ['content'],
-			template: "<li>{{content}}</li>"
+			props: ['content','index'],
+			template: "<li @click='handleItemClick'>{{content}}</li>",
+			methods:{
+				handleItemClick: function() {
+					//删除父组件中的数据 -> 通过子组件向父组件传值的方式
+					this.$emit("delete", this.index); //子组件向外出发delete事件 与 index下标  
+				}
+			}
 		}
-
 
 		var app = new Vue({
 			el: '#app', //实例管理的id
@@ -52,8 +58,13 @@
 				handleBtnClick: function() {
 					//alert('click');
 					this.list.push(this.inputValue);
-					alert(this.inputValue);
+					//alert(this.inputValue);
 					this.inputValue = ''; //清空输入框
+				},
+				handleItemDelete: function(index) {
+					//alert("delete");
+					//alert(index);
+					this.list.splice(index,1);
 				}
 			}	
 		})
