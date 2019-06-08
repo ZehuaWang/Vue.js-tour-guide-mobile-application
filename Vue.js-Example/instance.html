@@ -3,13 +3,36 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Vue Instance</title>
+	<script src='./vue.js'></script>
 </head>
 <body>
 	
-	<div id="root"></div>
+	<div id="root">
+		<div @click="handleClick">
+			{{messeage}}
+		</div>
+		<item></item>
+	</div>
 	
 	<script type="text/javascript">
 		
+		Vue.component('item', {
+			template: '<div>hello item</div>'
+		})
+
+		// 根实例 组件也是实例
+		var vm = new Vue({
+			el:'#root',
+			data: {
+				messeage: 'hello world'
+			},
+			methods: {
+				handleClick: function() {
+					alert("hello")
+				}
+			}
+		})
 	</script>
+
 </body>
 </html>
