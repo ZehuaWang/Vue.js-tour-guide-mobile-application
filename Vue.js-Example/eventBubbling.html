@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bubbling and capturing</title>
+	<style>
+  	body * {
+    	margin: 10px;
+    	border: 1px solid blue;
+  	}
+	</style>
+</head>
+<body>
+	<div onclick="alert('The handler!')">
+		<em>If you click on <code>EM</code>, the handler on <code>DIV</code> runs.</em>
+	</div>
+	
+	<!-- A more detailed example -->
+	<!-- focus event does not bubble -->
+	<form onclick="alert('form')"  >FORM
+		<div onclick="alert('div')">DIV
+			<p onclick="alert('p')">P
+			</p>
+		</div>
+	</form>
+	
+</body>
+</html>

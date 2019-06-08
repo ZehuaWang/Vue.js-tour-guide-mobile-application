@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Stop Bubbling</title>
+</head>
+<body>
+	
+	<div onclick="alert(`the bubbling doesn't reach here`)">
+		<button onclick="alert('click me');event.stopPropagation()">Click me</button>
+	</div>	
+
+</body>
+</html>
