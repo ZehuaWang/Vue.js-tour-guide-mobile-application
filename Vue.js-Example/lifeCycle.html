@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue实例生命周期函数</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">hello world</div>
+	
+	<script type="text/javascript">
+		// 生命周期函数 -> vue实例在某一个时间点自动执行的函数
+		var vm = new Vue({
+			el:"#app",
+			beforeCreate: function() {
+				console.log("Before Create");
+			}
+
+		})
+	</script>
+
+</body>
+</html>
