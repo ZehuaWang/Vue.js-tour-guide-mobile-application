@@ -6,14 +6,45 @@
 	<script src="./vue.js"></script>
 </head>
 <body>
-	<div id="app">hello world</div>
+	<div id="app"></div>
 	
 	<script type="text/javascript">
 		// 生命周期函数 -> vue实例在某一个时间点自动执行的函数
+		// 如果没有template 会把el表达式的外部当作一个整体的模版进行渲染
 		var vm = new Vue({
 			el:"#app",
+			template: "<div>{{test}}</div>",
+			data: {
+				test: "hello world"
+			},
 			beforeCreate: function() {
 				console.log("Before Create");
+			},
+			created: function() {
+				console.log("created");
+			},
+			//渲染hello world之前
+			beforeMount: function() {
+				console.log(this.$el);
+				console.log("before mount");
+			},
+			//渲染hello world之后
+			mounted: function() {
+				console.log(this.$el);
+				console.log("mounted");	
+			},
+			beforeDestory: function() {
+				console.log("beforeDestory");
+			},
+			destoryed: function() {
+				console.log("destoryed");
+			},
+			// 当数据发生改变时 执行
+			beforeUpdate: function() {
+				console.log("before updated");
+			},
+			updated: function() {
+				console.log("updated");
 			}
 
 		})
