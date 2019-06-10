@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bind CSS</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<style>
+		.active {
+			background: red;
+		}
+	</style>
+
+	<div id="classbinding">
+		<div v-bind:class = "{active:isactive}"><b>{{title}}</b></div>
+	</div>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#classbinding',
+			data: {
+				title: "CLASS BINDING",
+				isactive: true
+			}
+		})
+	</script>
+</body>
+</html>
