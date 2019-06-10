@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Render Function</title>
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="component_test">
+		<testcomponent>Eric</testcomponent>
+		<testcomponent>Hello Ben</testcomponent>
+	</div>
+
+	<script type="text/javascript">
+		Vue.component('testcomponent',{
+			template: '<h1><slot></slot></h1>',
+			data: function() {
+				return {}
+			},
+			methods: {
+
+			}
+		});
+		var vm = new Vue({
+			el: '#component_test'
+		});		
+	</script>
+
+</body>
+</html>
