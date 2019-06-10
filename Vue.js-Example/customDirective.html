@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Custom Directive</title>
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	
+	<div id="databinding">
+		<div v-changestyle>VueJS Directive</div>
+	</div>
+	
+	<script text="text/javascript">
+		Vue.directive("changestyle", {
+			bind(e1,binding,vnode) {
+				console.log(e1);
+				e1.style.color    = "red";
+				e1.style.fontSize = "30px";
+			}
+		});
+
+		var vm = new Vue({
+			el: '#databinding',
+			data: {
+
+			},
+			methods: {
+
+			}
+		});
+	</script>
+
+</body>
+</html>
