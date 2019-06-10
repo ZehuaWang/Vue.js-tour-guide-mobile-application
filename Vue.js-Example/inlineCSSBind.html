@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Inline CSS Bind</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	
+	<div id="databinding">
+		<div v-bind:style= "styleobj">{{title}}</div>
+	</div>
+	
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#databinding',
+			data: {
+				title: "Inline style Binding",
+				styleobj : {
+					color: 'red',
+					fontSize: '40px'
+				}
+			}
+		});
+	</script>
+
+</body>
+</html>
