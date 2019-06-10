@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>VueJs Router</title>
+	<script src="./vue.js"></script>
+	<script src="./vue-router.js"></script>
+</head>
+<body>
+	<div id="app">
+		<h1>Routing Example</h1>
+		<p>
+			<router-link to = "/route1">Router Link 1</router-link>
+			<router-link to = "/route2">Router Link 2</router-link>
+		</p>
+		<router-view></router-view>
+	</div>
+
+	<script type="text/javascript">
+		const Route1 = { template: '<div style = "border-radius:20px;background-color:cyan;width:200px;height:50px;margin:10px;font-size:25px;padding:10px;">This is router 1</div>' };
+		const Route2 = { template: '<div style = "border-radius:20px;background-color:cyan;width:200px;height:50px;margin:10px;font-size:25px;padding:10px;">This is router 2</div>' };
+		const routes = [
+			{path: '/route1', component: Route1},
+			{path: '/route2', component: Route2}
+		];
+		const router = new VueRouter({
+			routes
+		});
+		var vm = new Vue({
+			el: '#app',
+			router
+		});
+	</script>
+	
+</body>
+</html>
