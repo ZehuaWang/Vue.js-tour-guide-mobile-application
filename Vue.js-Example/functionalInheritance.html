@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Functional Inheritance</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// Base object factory
+		function base (spec) {
+			var that = {};
+			that.name = spec.name;
+			return that;
+		}
+
+		// Construct a child object, inheriting from "base"
+		function child (spec) {
+			// Create the object through the "base" constructor
+			var that = base(spec);
+			that.sayHello = function() {
+				return 'Hello, ' + that.name;
+			};
+			return that;
+		}
+
+		// Because child() is tightly coupled to base(), when you add grandchild(), greatGrandchild(), etc..., you'll opt into most of the common problems from class inheritance.
+		var result = child({name : 'Eric'});
+		console.log(result.sayHello());
+	</script>
+</body>
+</html>

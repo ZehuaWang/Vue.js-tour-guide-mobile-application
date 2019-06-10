@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Filter Vue.js</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="databinding">
+		<input v-model = "name" placeholder="Enter Name" /><br/>
+		<span style="font-size: 25px;"><b>Letter count is : {{name | countletters}}</b></span>
+	</div>
+	
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#databinding',
+			data: {
+				name: ""
+			},
+			filters : {
+				countletters : function(value) {
+					return value.length;
+				}
+			}
+		})
+	</script>
+
+</body>
+</html>
