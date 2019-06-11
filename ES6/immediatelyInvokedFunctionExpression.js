@@ -5,6 +5,6 @@ var main = function() {
 		}
 	}();
 	console.log("x can not be accessed outside the block scope x value is :"+x);
-}
+}();
 
 main();
