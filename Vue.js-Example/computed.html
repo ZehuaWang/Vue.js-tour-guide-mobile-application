@@ -18,17 +18,31 @@
 			data: {
 				firstName: "Eric",
 				lastName : "Wang",
+				fullName: "Eric Wang",
 				age: 28
 			},
-			// 计算属性
-			computed:{
-				fullName: function() {
-					console.log("计算了一次");
-					return this.firstName + " " + this.lastName;
+			watch: {
+				firstName: function() {
+					this.fullName = this.firstName + " " + this.lastName;
+				},
+				lastName: function() {
+					this.fullName = this.firstName + " " + this.lastName;	
 				}
 			}
+			// 方法不如计算属性 没有缓存机制
+			//methods: {
+			//	fullName: function() {
+			//		return this.firstName + " " + this.lastName;
+			//	}
+			//}
+			// 计算属性 有缓存机制 如果参与计算的变量不变 则不会重新计算
+			//computed:{
+			//	fullName: function() {
+			//		console.log("计算了一次");
+			//		return this.firstName + " " + this.lastName;
+			//	}
+			//}
 		})
 	</script>
-
 </body>
 </html>
