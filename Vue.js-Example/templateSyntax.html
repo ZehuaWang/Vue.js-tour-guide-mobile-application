@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模版语法</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<!-- 插值表达式 -->
+	<div id="app">
+		{{name}}
+		<div v-text="name + ' Lee' "></div>
+		<!-- 绑定innerHTML 与 name中的值-->
+		<div v-html="name"></div>
+	</div>
+	
+	<script>
+		var vm = new Vue({ 
+			el: "#app",
+			data: {
+				name: "<h1>Eric</h1>"
+			}
+		})
+	</script>
+
+</body>
+</html>
