@@ -21,7 +21,6 @@ for(let r of roles.entries())
 
 console.log(map.get('name'));
 
-
 // Weak Maps
 // Its keys must be objects.
 // Keys in a weak map can be Garbage collected
@@ -31,3 +30,16 @@ let obj = {};
 console.log(weakMap.set(obj,"hello"));
 console.log(weakMap.has(obj));
 console.log(weakMap.get(obj));
+
+// Set and Iterator 
+var set = new Set(['a','b','c','d','e']); 
+var iterator = set.entries();
+console.log(iterator.next());
+
+var iterator = set.values();
+console.log(iterator.next());
+
+// Map and iterator
+var map = new Map([[1,'one'],[2,'two'],[3,'three']]); 
+var iterator = map.values();
+console.log(iterator.next());
