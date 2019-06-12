@@ -17,6 +17,7 @@
 			},
 			computed: {
 				fullName: {
+					// 依赖的值发生变化 就会重新计算
 					get: function() {
 						return this.firstName + " " + this.lastName;
 					},
