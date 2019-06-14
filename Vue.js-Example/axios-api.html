@@ -8,7 +8,11 @@
 </head>
 <body>
 	
-	<div id="app">{{info}}</div>
+	<div id="app">
+	
+		{{info}}
+	
+	</div>
 	
 	<script type="text/javascript">
 		var app = new Vue({
@@ -19,7 +23,7 @@
 				}
 			},
 			mounted() {
-				axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(response => (this.info = response))
+				axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(response => (this.info = response.data.bpi))
 			}
 		})
 	</script>
