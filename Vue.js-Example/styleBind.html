@@ -14,7 +14,7 @@
 
 	<div id="app">
 		<div @click="handleDivClick"
-		     :class="{activated: isActivated}"
+		     :class="[activated]" 
 		>
 		Hello World
 		</div>
@@ -24,11 +24,11 @@
 		var vm = new Vue({
 			el: "#app",
 			data: {
-				isActivated: false
+				activated: ""
 			},
 			methods: {
 				handleDivClick: function() {
-					this.isActivated = !this.isActivated;
+					this.activated = this.activated === "activated" ? "" : "activated"
 				}
 			}
 		})
