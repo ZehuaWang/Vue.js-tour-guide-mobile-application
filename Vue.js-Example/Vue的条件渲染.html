@@ -16,6 +16,7 @@
 		<div v-else-if="letter === 'b' ">This is B</div>
 		<div v-else>This is other letter</div>
 		
+		<!-- Vue的标签加上key值 Vue会知道这是页面上唯一的元素 重新渲染对应的node -->
 		<div v-if="show">用户名: <input key="username"/></div>
 		<div v-else>邮箱名: <input key="password"/></div>
 
