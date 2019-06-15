@@ -12,9 +12,20 @@
 		     :key="item.id">
 			{{item.text}} --- {{index}}
 		</div>
+		
+		<!-- 模版占位符 -->
+		<template v-for="(item, index) of list" >
+			
+			<div>
+				{{item.text}}
+			</div>		
+			
+		</template>
+
 	</div>
 
 	<script type="text/javascript">
+		// push pop shift unshift splice sort reverse 数组操作
 		var vm = new Vue({
 			el: "#app",
 			data: { list: [ //模拟后端返回数据
