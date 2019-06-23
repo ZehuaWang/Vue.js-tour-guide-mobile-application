@@ -11,24 +11,33 @@
 
 <body>
 
-    <div id="root">
+    <!-- <div id="root">
         <child content='<p>Dell</p>'></child>
+    </div> -->
+
+    <div id="root">
+        <child>
+            <p>Dell</p>
+        </child>
     </div>
 
     <script>
+        // Vue.component('child', {
+        //     props: ['content'],
+        //     template: `<div>
+        //                 <p>hello</p>
+        //                 <div v-html="this.content"></div>
+        //               </div>`
+        // })
+
         Vue.component('child', {
-            props: ['content'],
-            template: `<div>
-                        <p>hello</p>
-                        <div v-html="this.content"></div>
-                      </div>`
+            template: `<div><slot></slot></div>`
         })
 
         var vm = new Vue({
             el: '#root'
         })
     </script>
-
 
 </body>
 

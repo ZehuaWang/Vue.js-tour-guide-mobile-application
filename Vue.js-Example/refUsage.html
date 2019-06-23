@@ -1,63 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Reference Usage</title>
-	<script src="./vue.js"></script>
+    <meta charset="UTF-8">
+    <title>Reference Usage</title>
+    <script src="./vue.js"></script>
 </head>
+
 <body>
-	
-	<div id="root">
-		
-		<!-- use ref to do doom -->
-		<div ref='hello' @click="handleClick"> hello world </div>
-		
-		<counter  ref="one"  @change="handleChange"></counter>
-		<counter  ref="two"  @change="handleChange"></counter>
-		
-		<!-- Get the sum of two counter-->
-		<div>{{total}}</div>
 
-	</div>
-	
+    <div id="root">
 
-	<script type="text/javascript">
-		
-		Vue.component('counter', {
-			template: '<div @click="countClick"> {{number}} </div>',
-			data: function() {
-				return {
-					number: 0
-				}
-			},
-			methods: {
-				countClick: function() {
-					this.number++;
-					// 子组件向父组件传值
-					this.$emit('change');
-				}
-			}
-		})
+        <!-- use ref to do doom -->
+        <div ref='hello' @click="handleClick"> hello world </div>
+
+        <counter ref="one" @change="handleChange"></counter>
+        <counter ref="two" @change="handleChange"></counter>
+
+        <!-- Get the sum of two counter-->
+        <div>{{total}}</div>
+
+    </div>
 
 
-		var vm = new Vue({
-			el: '#root',
-			data: {
-				total: 0
-			},
-			methods: {
-				handleClick: function() {
-					alert(this.$refs.hello.innerHTML);
-				},
-				handleChange: function() {
-					//console.log(this.$refs.one);
-					//console.log(this.$refs.two);
-					this.total = this.$refs.one.number + this.$refs.two.number;
-				}
-			}
-		})
+    <script type="text/javascript">
+        Vue.component('counter', {
+            template: '<div @click="countClick"> {{number}} </div>',
+            data: function() {
+                return {
+                    number: 0
+                }
+            },
+            methods: {
+                countClick: function() {
+                    this.number++;
+                    // 子组件向父组件传值
+                    this.$emit('change');
+                }
+            }
+        })
 
-	</script>
+
+        var vm = new Vue({
+            el: '#root',
+            data: {
+                total: 0
+            },
+            methods: {
+                handleClick: function() {
+                    alert(this.$refs.hello.innerHTML);
+                },
+                handleChange: function() {
+                    //console.log(this.$refs.one);
+                    //console.log(this.$refs.two);
+                    this.total = this.$refs.one.number + this.$refs.two.number;
+                }
+            }
+        })
+    </script>
 
 </body>
+
 </html>
