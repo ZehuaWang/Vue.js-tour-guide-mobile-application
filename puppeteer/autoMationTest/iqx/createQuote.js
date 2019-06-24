@@ -143,12 +143,29 @@ module.exports = (async() => {
 
     await page.screenshot({path: './img/quote_setup_page_after_select.png'});
 
-    await browser.close();
+    await excuteActionAndCaputerException(page,() => {page.click('button[type=submit]');});
 
+    await browser.close();
 });
 
 function stringToArray(str) {
     var productArr = [];
     productArr = str.split(",");
     return productArr;
+}
+
+// This function is used to excute the action like press the button and check if the page returns error
+async function excuteActionAndCaputerException(page,action) {
+    try{
+        errorSel = await "div[class='error-summary']";
+        await action();
+        await page.waitForSelector(errorSel,{timeout:1000});
+        let errorSummary = await page.$eval(errorSel, e=>e.innerHTML);
+        if(errorSummary != '') {
+            throw new Error('Error from the page: ') + errorSummary;
+        }
+    } catch(e) {
+        if (e.toString().includes('timeout')) {return true;} // If timeout means there is no error on the page, continue
+        else{console.log(e);}
+    }
 }
