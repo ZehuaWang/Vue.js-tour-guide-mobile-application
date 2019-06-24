@@ -1,5 +1,7 @@
 module.exports = (async() => {
     const PropertiesReader = require('properties-reader');
+    const actionStack = require('./actionStack'); // This is a class used to execute the action and print the error log
+    const as = new actionStack();
     const properties = PropertiesReader('./config/config.properties');
     const addQuoteproperties = PropertiesReader('./config/quoteAdd.properties');
     const puppeteer = require('puppeteer');
@@ -131,7 +133,6 @@ module.exports = (async() => {
         await productFamilyArr.forEach((product) => {
             let inputId = productMap.get(product);
             let sel = "input[id=" + "'" + inputId + "'" + "]";
-            //console.log(sel);
             
             page.evaluate((sel) => {
                 document.querySelector(sel).click();
@@ -140,12 +141,12 @@ module.exports = (async() => {
         }); 
     }
 
-    await page.screenshot({path: './img/quote_setup_page_after_select.png'}); 
+    await page.screenshot({path: './img/quote_setup_page_after_select.png'});
 
     await browser.close();
+
 });
 
-// Turn string to array
 function stringToArray(str) {
     var productArr = [];
     productArr = str.split(",");
