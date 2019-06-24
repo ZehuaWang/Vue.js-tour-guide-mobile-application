@@ -1,18 +1,21 @@
-module.exports = (async() => {
-    const PropertiesReader = require('properties-reader');
-    const actionStack = require('./actionStack'); // This is a class used to execute the action and print the error log
-    const as = new actionStack();
-    const properties = PropertiesReader('./config/config.properties');
-    const addQuoteproperties = PropertiesReader('./config/quoteAdd.properties');
-    const puppeteer = require('puppeteer');
+const fs = require('fs');
+const puppeteer = require('puppeteer');
+const PropertiesReader = require('properties-reader');
 
-    //Get all the parameters from config file
-    const homeUrl    = properties.get('homeUrl') ;
-    const userName   = properties.get('userName');
-    const passWord   = properties.get('passWord');
-    const clientName = addQuoteproperties.get('clientName');
-    const productFamily = addQuoteproperties.get('productFamily');
-    const allProductsSelected = addQuoteproperties.get('allProduct');
+const actionStack = require('./actionStack'); // This is a class used to execute the action and print the error log
+const as = new actionStack();
+const properties = PropertiesReader('./config/config.properties');
+const addQuoteproperties = PropertiesReader('./config/quoteAdd.properties');
+
+//Get all the parameters from config file
+const homeUrl    = properties.get('homeUrl') ;
+const userName   = properties.get('userName');
+const passWord   = properties.get('passWord');
+const clientName = addQuoteproperties.get('clientName');
+const productFamily = addQuoteproperties.get('productFamily');
+const allProductsSelected = addQuoteproperties.get('allProduct');
+
+module.exports = (async() => {
     
     const productMap = new Map();
     productMap.set("lifeFamily","lifeFamily_group");
@@ -37,14 +40,17 @@ module.exports = (async() => {
     });
     
     // excute the login procedure -> should read from the properties file
-    await page.goto(homeUrl);
+    await excuteActionAndCaputerException(page, () => page.goto(homeUrl));
     await page.type('input[name=loginName]', userName);
     await page.type('input[name=passwd]',passWord);
     
     await page.screenshot({path: './img/login_page.png'});
 
     // go to the first page and take a screen shoot
-    page.click('button[type=submit]');
+    //page.click('button[type=submit]');
+
+    await excuteActionAndCaputerException(page,() => {page.click('button[type=submit]');});
+    
     await page.waitForNavigation({waitUntil: 'networkidle0'});
     await page.screenshot({path: './img/home_page.png'});
 
@@ -62,7 +68,9 @@ module.exports = (async() => {
     console.log('The top bar nav link is: '+topNavBarSelLink);
 
     // go to the quote search page
-    await page.goto(topNavBarSelLink[2],{waitUntil: 'domcontentloaded'});
+    await excuteActionAndCaputerException(page, ()=> {page.goto(topNavBarSelLink[2],{waitUntil: 'domcontentloaded'});})
+
+
     await page.screenshot({path: './img/quote_search_page.png'});
 
     // get the left nav bar link
@@ -79,7 +87,7 @@ module.exports = (async() => {
     console.log('The left bar nav link is: ' + leftNavBarSelLink);
 
     // go to client lookup page -> this is where to add quote
-    await page.goto(leftNavBarSelLink[1],{waitUntil: 'domcontentloaded'});
+    await excuteActionAndCaputerException(page, ()=>{page.goto(leftNavBarSelLink[1],{waitUntil: 'domcontentloaded'});});
     await page.screenshot({path: './img/add_quote_page.png'});
 
     // on the Add quote page -> 1. input the client legal name 2. click search
@@ -89,7 +97,6 @@ module.exports = (async() => {
     await page.screenshot({path: './img/client_lookup_page.png'});
 
     // TODO If the client do not exist, throw error to a log file. Only the accurate clinetName can be use
-    
     var clientNameSel = "table[id='clientSelectionTable'] > tbody > tr > td.sorting_1 > input";
     const type = await page.evaluate((clientNameSel) => {
         var radio = document.querySelector(clientNameSel);
@@ -101,25 +108,13 @@ module.exports = (async() => {
 
     // debug
     await page.screenshot({path: './img/client_lookup_page_select.png'});
-    
-    await page.click("button[name='submit.continue']");
-    
-    //------------------------------------------------------------------------------------------------------------------
-    // This quote set 3 seconds delay before go to the quote setup page -> need to find a way to replace this one
-    await (() =>{
-        var start = new Date().getTime();
-        var end = start;
-        while(end < start + 3000) {
-            end = new Date().getTime();
-         }       
-    })();
-    //------------------------------------------------------------------------------------------------------------------
+
+    await excuteActionAndCaputerException(page, ()=>{page.click("button[name='submit.continue']");})
 
     await page.screenshot({path: './img/quote_setup_page.png'});
 
     // In quote setup page, you need to check the config you need -> this should come from the quoteAdd.properties config file
     // Examole -> choose basic Life as product and no quick features
-
     // selectAllProducts
     if(allProductsSelected+'' == 'true') {
         await page.evaluate(()=> {
@@ -145,6 +140,8 @@ module.exports = (async() => {
 
     await excuteActionAndCaputerException(page,() => {page.click('button[type=submit]');});
 
+    await page.screenshot({path: './img/quote_build.png'});
+
     await browser.close();
 });
 
@@ -166,6 +163,16 @@ async function excuteActionAndCaputerException(page,action) {
         }
     } catch(e) {
         if (e.toString().includes('timeout')) {return true;} // If timeout means there is no error on the page, continue
-        else{console.log(e);}
+        else{console.log(e); writeToLog(e); return false;}
     }
+}
+
+// Add a function to write to log file -> TODO Add a format for the log
+async function writeToLog(errMessage) {
+    
+    await fs.writeFileSync("./log/errorlog", errMessage, function(err){
+        if(err) {return console.log(err);}
+    })
+    
+    await console.log("The log is saved");
 }
