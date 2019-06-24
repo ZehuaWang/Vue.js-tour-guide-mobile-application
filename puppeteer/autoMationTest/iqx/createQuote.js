@@ -17,6 +17,7 @@ const allProductsSelected = addQuoteproperties.get('allProduct');
 
 module.exports = (async() => {
     
+    // set the CSS id related to the related product
     const productMap = new Map();
     productMap.set("lifeFamily","lifeFamily_group");
     productMap.set("disabilityFamily","disabilityFamily_group");
@@ -49,7 +50,7 @@ module.exports = (async() => {
     // go to the first page and take a screen shoot
     //page.click('button[type=submit]');
 
-    await excuteActionAndCaputerException(page,() => {page.click('button[type=submit]');});
+    excuteActionAndCaputerException(page,() => {page.click('button[type=submit]');});
     
     await page.waitForNavigation({waitUntil: 'networkidle0'});
     await page.screenshot({path: './img/home_page.png'});
@@ -104,7 +105,6 @@ module.exports = (async() => {
         radio.click();
         return type;
     }, clientNameSel);
-    console.log("type: " + type);
 
     // debug
     await page.screenshot({path: './img/client_lookup_page_select.png'});
@@ -143,6 +143,10 @@ module.exports = (async() => {
     await page.screenshot({path: './img/quote_build.png'});
 
     await browser.close();
+
+    var end = await new Date().getTime();
+
+    await console.log("Total time used is: " + (end - start)/1000 + " s");
 });
 
 function stringToArray(str) {
@@ -159,7 +163,7 @@ async function excuteActionAndCaputerException(page,action) {
         await page.waitForSelector(errorSel,{timeout:1000});
         let errorSummary = await page.$eval(errorSel, e=>e.innerHTML);
         if(errorSummary != '') {
-            throw new Error('Error from the page: ') + errorSummary;
+            throw new Error('Error from the page: ')+ page.url() + "\n" +"Error Summary: " +errorSummary;
         }
     } catch(e) {
         if (e.toString().includes('timeout')) {return true;} // If timeout means there is no error on the page, continue
