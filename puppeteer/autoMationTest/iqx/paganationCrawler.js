@@ -26,8 +26,8 @@ const fs = require('fs');
     var nextBtnSel   = "li[id='homeStatisticsTable_next']";
     await page.waitForSelector(nextBtnSel);
     var nextBtnClass = await page.evaluate((nextBtnSel) => {
-        var btn = Array.from(document.querySelector(nextBtnSel));
-        let btnHtml = btn.map(ele => {return ele.html;});
+        var btn = Array.from(document.querySelectorAll(nextBtnSel));
+        let btnHtml = btn.map(ele => {return ele.className;});
         return btnHtml;
     }, nextBtnSel);
     await console.log(nextBtnClass);
