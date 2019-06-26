@@ -44,11 +44,11 @@ const puppeteer = require('puppeteer');
         await page.waitForSelector(productTittleSel);
         await page.waitForSelector(nextBtnSel);
         results = results.concat(await extractProductTitle(page, productTittleSel));
-        await page.waitFor(2000);
+        await page.waitFor(500);
         await page.$eval(nextBtnSel, elem => elem.click());
         //await page.click(nextBtnSel);
-        await page.waitFor(2000);
-        await page.screenshot({ path: './img/amazon_daily_sale'+i+'.png' });
+        await page.waitFor(500);
+        await page.screenshot({ path: './img/dailySale/amazon_daily_sale'+i+'.png' });
     }
 
     // Save the record to a text file in a loop
