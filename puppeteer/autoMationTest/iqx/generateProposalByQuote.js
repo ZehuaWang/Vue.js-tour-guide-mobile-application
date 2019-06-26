@@ -1,7 +1,7 @@
 // This script is used to generate a proposal by quote id. -> For CHUBB. 
 const puppeteer = require('puppeteer');
 
-(async() => {
+module.exports = (async(quoteId) => {
 
     // Initialize the environment
     var start = await new Date().getTime();
@@ -26,7 +26,7 @@ const puppeteer = require('puppeteer');
     await page.screenshot({path: './img/home_page.png'});
 
     // quote search
-    var quoteId = 1620+'';
+    var quoteId = quoteId+ '';
     await page.type('input[name=externalId]',quoteId);
     await page.screenshot({path: './img/id_search.png'});
 
@@ -67,10 +67,10 @@ const puppeteer = require('puppeteer');
     // TODO Set a time to downlaod the proposal automatically
     // Set 25 seconds to allow the download of proposal
     
-    await setTimeout(() => {browser.close()}, 25000);
+    await console.log("Downloading proposal for quote: " + quoteId);
 
     //await browser.close();
-})();
+});
 
 // This function is used to excute the action like press the button and check if the page returns error
 async function excuteActionAndCaputerException(page,action) {
@@ -85,5 +85,13 @@ async function excuteActionAndCaputerException(page,action) {
     } catch(e) {
         if (e.toString().includes('timeout')) {return true;} // If timeout means there is no error on the page, continue
         else{console.log(e); writeToLog(e); return false;}
+    }
+}
+
+function delay(time) {
+    var now = Date.now;
+    var end = Date.now;
+    while(end - now < 3000) {
+        end = Date.now;
     }
 }
