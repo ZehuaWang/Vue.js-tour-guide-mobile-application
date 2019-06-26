@@ -39,7 +39,7 @@ const puppeteer = require('puppeteer');
     var results = [];
 
     // change this 99 to get from the web -> paganation failed
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 99; i++) {
         await console.log("Process the " + i + " page");
         await page.waitForSelector(productTittleSel);
         await page.waitForSelector(nextBtnSel);
