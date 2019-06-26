@@ -33,19 +33,32 @@ const puppeteer = require('puppeteer');
     //var productTitleText = await page.$$eval(productTittleSel, as => as.map(a => a.innerText));
 
     // paganation to last page
-    var nextBtnSel = "ul[class='a-pagination'] > li[class='a-last']";
+    var nextBtnSel = "ul[class='a-pagination'] > li[class='a-last'] > a";
 
     // make a loop to go through all the page -> first 5
     var results = [];
 
+    // change this 99 to get from the web -> paganation failed
     for (var i = 0; i < 99; i++) {
+        await console.log("Process the " + i + " page");
         await page.waitForSelector(productTittleSel);
+        await page.waitForSelector(nextBtnSel);
         results = results.concat(await extractProductTitle(page, productTittleSel));
+        await page.waitFor(500);
         await page.$eval(nextBtnSel, elem => elem.click());
+        //await page.click(nextBtnSel);
+        await page.waitFor(500);
+        await page.screenshot({ path: './img/dailySale/amazon_daily_sale'+i+'.png' });
     }
 
-    //console.log(results);
-    results.forEach(title => { console.log(title); })
+    // Save the record to a text file in a loop
+    for(var i=0; i<results.length; i++) {
+        await console.log(results[i]);
+        await page.waitFor(10);
+        await writeToFile(results[i]);
+        await page.waitFor(10);
+    }
+
     console.log(results.length);
 
     await browser.close();
@@ -53,4 +66,12 @@ const puppeteer = require('puppeteer');
 
 async function extractProductTitle(page, productTittleSel) {
     return page.$$eval(productTittleSel, as => as.map(a => a.innerText));
+}
+
+async function writeToFile(content) {
+    await fs.appendFileSync("./log/productinfo", content+"\n", function(err){
+        if(err) {return console.log(err);}
+    });
+
+    await console.log("The product info is saved");
 }
