@@ -33,18 +33,22 @@ const puppeteer = require('puppeteer');
     //var productTitleText = await page.$$eval(productTittleSel, as => as.map(a => a.innerText));
 
     // paganation to last page
-    var nextBtnSel = "ul[class='a-pagination'] > li[class='a-last']";
+    var nextBtnSel = "ul[class='a-pagination'] > li[class='a-last'] > a";
 
     // make a loop to go through all the page -> first 5
     var results = [];
 
     // change this 99 to get from the web -> paganation failed
-    for (var i = 0; i < 99; i++) {
+    for (var i = 0; i < 10; i++) {
+        await console.log("Process the " + i + " page");
         await page.waitForSelector(productTittleSel);
-        await page.waitFor(10);
+        await page.waitForSelector(nextBtnSel);
         results = results.concat(await extractProductTitle(page, productTittleSel));
-        await page.waitFor(10);
+        await page.waitFor(2000);
         await page.$eval(nextBtnSel, elem => elem.click());
+        //await page.click(nextBtnSel);
+        await page.waitFor(2000);
+        await page.screenshot({ path: './img/amazon_daily_sale'+i+'.png' });
     }
 
     // Save the record to a text file in a loop
