@@ -49,7 +49,7 @@ const puppeteer = require('puppeteer');
         await page.waitForSelector(productTittleSel);
         await page.waitForSelector(priceSel);
         await page.waitForSelector(nextBtnSel);
-        results = results.concat(await extractProductTitle(page, productTittleSel)).concat(await extractProductPrice(page, priceSel));
+        results = results.concat(await extractProductTitle(page, productTittleSel)).concat(await extractProductPrice(page, priceSel)); // another issue, the product and price should be in the same line
         await page.waitFor(500);
         await page.$eval(nextBtnSel, elem => elem.click());
         await page.waitFor(500);
@@ -72,7 +72,7 @@ async function extractProductTitle(page, productTittleSel) {
     return page.$$eval(productTittleSel, as => as.map(a => a.innerText));
 }
 
-async function extractProductPrice(page, productPriceSel) { // issue some selector innerText is empty this also need to put in the array
+async function extractProductPrice(page, productPriceSel) { // issue some selector innerText is empty this also need to put in the array -> for example, some product do not have price
     return page.$$eval(productPriceSel, as => as.map(a => a.innerText));
 }
 
