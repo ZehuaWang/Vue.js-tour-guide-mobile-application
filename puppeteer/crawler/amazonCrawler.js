@@ -72,7 +72,7 @@ async function extractProductTitle(page, productTittleSel) {
     return page.$$eval(productTittleSel, as => as.map(a => a.innerText));
 }
 
-async function extractProductPrice(page, productPriceSel) {
+async function extractProductPrice(page, productPriceSel) { // issue some selector innerText is empty this also need to put in the array
     return page.$$eval(productPriceSel, as => as.map(a => a.innerText));
 }
 
