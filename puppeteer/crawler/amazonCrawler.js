@@ -23,36 +23,36 @@ const puppeteer = require('puppeteer');
         if (href.includes('todaysdeals')) { dailySalelink = href + ""; }
     });
 
-    //await console.log(dailySalelink);
-
     await page.goto(dailySalelink + ""); // for now it is fixed. Need to change with the web
     await page.screenshot({ path: './img/amazon_daily_sale.png' });
 
     // need to get the text content of the goods and save to text for now
     var productTittleSel = "a[id='dealTitle'] > span[data-action='gbdeal-actionrecord']";
-    //var productTitleText = await page.$$eval(productTittleSel, as => as.map(a => a.innerText));
 
-    // paganation to last page
+    // paganation to next page
     var nextBtnSel = "ul[class='a-pagination'] > li[class='a-last'] > a";
+
+    // get the last page number
+    var lastPageSel = "ul[class='a-pagination'] > li[class='a-disabled']";
+    var lastPageNum = await getTheTotalPageNum(page, lastPageSel);
+    lastPageNum = await lastPageNum.slice(-1).pop();
 
     // make a loop to go through all the page -> first 5
     var results = [];
 
     // change this 99 to get from the web -> paganation failed
-    for (var i = 0; i < 99; i++) {
+    for (var i = 0; i < lastPageNum; i++) {
         await console.log("Process the " + i + " page");
         await page.waitForSelector(productTittleSel);
         await page.waitForSelector(nextBtnSel);
         results = results.concat(await extractProductTitle(page, productTittleSel));
         await page.waitFor(500);
         await page.$eval(nextBtnSel, elem => elem.click());
-        //await page.click(nextBtnSel);
         await page.waitFor(500);
-        await page.screenshot({ path: './img/dailySale/amazon_daily_sale'+i+'.png' });
     }
 
     // Save the record to a text file in a loop
-    for(var i=0; i<results.length; i++) {
+    for (var i = 0; i < results.length; i++) {
         await console.log(results[i]);
         await page.waitFor(10);
         await writeToFile(results[i]);
@@ -69,9 +69,12 @@ async function extractProductTitle(page, productTittleSel) {
 }
 
 async function writeToFile(content) {
-    await fs.appendFileSync("./log/productinfo", content+"\n", function(err){
-        if(err) {return console.log(err);}
+    await fs.appendFileSync("./log/productinfo", content + "\n", function(err) {
+        if (err) { return console.log(err); }
     });
-
     await console.log("The product info is saved");
+}
+
+async function getTheTotalPageNum(page, lastPageSel) {
+    return page.$$eval(lastPageSel, as => as.map(a => a.innerText));
 }
