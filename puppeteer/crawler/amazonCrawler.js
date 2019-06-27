@@ -32,6 +32,9 @@ const puppeteer = require('puppeteer');
     // paganation to next page
     var nextBtnSel = "ul[class='a-pagination'] > li[class='a-last'] > a";
 
+    // set the selector for price after deal
+    var priceSel = "div.a-row.priceBlock.unitLineHeight > span.a-size-medium.inlineBlock.unitLineHeight.dealPriceText";
+
     // get the last page number
     var lastPageSel = "ul[class='a-pagination'] > li[class='a-disabled']";
     var lastPageNum = await getTheTotalPageNum(page, lastPageSel);
@@ -44,8 +47,9 @@ const puppeteer = require('puppeteer');
     for (var i = 0; i < lastPageNum; i++) {
         await console.log("Process the " + i + " page");
         await page.waitForSelector(productTittleSel);
+        await page.waitForSelector(priceSel);
         await page.waitForSelector(nextBtnSel);
-        results = results.concat(await extractProductTitle(page, productTittleSel));
+        results = results.concat(await extractProductTitle(page, productTittleSel)).concat(await extractProductPrice(page, priceSel));
         await page.waitFor(500);
         await page.$eval(nextBtnSel, elem => elem.click());
         await page.waitFor(500);
@@ -66,6 +70,10 @@ const puppeteer = require('puppeteer');
 
 async function extractProductTitle(page, productTittleSel) {
     return page.$$eval(productTittleSel, as => as.map(a => a.innerText));
+}
+
+async function extractProductPrice(page, productPriceSel) {
+    return page.$$eval(productPriceSel, as => as.map(a => a.innerText));
 }
 
 async function writeToFile(content) {
