@@ -16,6 +16,7 @@ const puppeteer = require('puppeteer');
     // click deals store tag and do screen shot
     // get the link of top nav bar
     let topBarSel = "div[id='nav-xshop-container'] > div[id='nav-xshop'] > a";
+    await page.waitForSelector(topBarSel);
     const topNavBarhrefs = await page.$$eval(topBarSel, as => as.map(a => a.href));
 
     var dailySalelink;
@@ -43,16 +44,19 @@ const puppeteer = require('puppeteer');
     // make a loop to go through all the page -> first 5
     var results = [];
 
+    // delete the old file
+    await deleteFile("./log/productinfo");
+
     // change this 99 to get from the web -> paganation failed
     for (var i = 0; i < lastPageNum; i++) {
         await console.log("Process the " + i + " page");
         await page.waitForSelector(productTittleSel);
         await page.waitForSelector(priceSel);
         await page.waitForSelector(nextBtnSel);
-        results = results.concat(await extractProductTitle(page, productTittleSel)).concat(await extractProductPrice(page, priceSel)); // another issue, the product and price should be in the same line
-        await page.waitFor(500);
+        results = results.concat(await extractProductTitle(page, productTittleSel)); // another issue, the product and price should be in the same line
+        await page.waitFor(600);
         await page.$eval(nextBtnSel, elem => elem.click());
-        await page.waitFor(500);
+        //await page.waitFor(500);
     }
 
     // Save the record to a text file in a loop
@@ -85,4 +89,12 @@ async function writeToFile(content) {
 
 async function getTheTotalPageNum(page, lastPageSel) {
     return page.$$eval(lastPageSel, as => as.map(a => a.innerText));
+}
+
+async function deleteFile(filePath) {
+    await fs.unlink(filePath, function (err) {
+        if (err) throw err;
+        // if no error, file has been deleted successfully
+        console.log('File deleted!');
+    });  
 }
