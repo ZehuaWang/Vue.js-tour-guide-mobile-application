@@ -8,8 +8,9 @@ const puppeteer = require('puppeteer');
         width: 1920,
         height: 1768
     });
+    await page.waitFor(1000);
     await page.goto("https://www.amazon.ca/");
-
+    await page.waitFor(2000);
     //go to the first page of amazon
     await page.screenshot({ path: './img/amazon_home.png' });
 
@@ -23,7 +24,7 @@ const puppeteer = require('puppeteer');
     await topNavBarhrefs.forEach(href => {
         if (href.includes('todaysdeals')) { dailySalelink = href + ""; }
     });
-
+    await page.waitFor(2000);
     await page.goto(dailySalelink + ""); // for now it is fixed. Need to change with the web
     await page.screenshot({ path: './img/amazon_daily_sale.png' });
 
@@ -45,28 +46,24 @@ const puppeteer = require('puppeteer');
     var results = [];
 
     // delete the old file
-    //await deleteFile("./log/productinfo");
+    await deleteFile("./log/productinfo");
 
-    // change this 99 to get from the web -> paganation failed
-    for (var i = 0; i < 3; i++) {
+
+    for (var i = 0; i < lastPageNum; i++) {
         await console.log("Process the " + i + " page");
         await page.waitForSelector(productTittleSel);
         await page.waitForSelector(priceSel);
         await page.waitForSelector(nextBtnSel);
-        //results = results.concat(await extractProductTitle(page, productTittleSel)); // another issue, the product and price should be in the same line
-        //results = results.concat(await combineProducttitleAndPrice(page, productTittleSel, priceSel));
         let productTitleArr = await extractProductTitle(page, productTittleSel);
         let productPriceArr = await extractProductPrice(page, priceSel);
-        results = await results.concat(await combineProducttitleAndPrice(productTitleArr, productPriceArr));
-        await console.log(results);
+        results = results.concat(productTitleArr);
+        //results = results.concat(await combineProducttitleAndPrice(productTitleArr, productPriceArr));
         await page.waitFor(600);
         await page.$eval(nextBtnSel, elem => elem.click());
-        //await page.waitFor(500);
     }
 
     // Save the record to a text file in a loop
     for (var i = 0; i < results.length; i++) {
-        await console.log(results[i]);
         await page.waitFor(10);
         await writeToFile(results[i]);
         await page.waitFor(10);
@@ -88,17 +85,29 @@ async function extractProductPrice(page, productPriceSel) { // issue some select
 // add a function to combine the product title and the product price
 async function combineProducttitleAndPrice(productTittleArr, productPriceArr) {
     var result = [];
-    if (productTittleArr.length == productPriceArr.length) { // This means that every product on the page has a price 
-
+    if (productTittleArr.length == productPriceArr.length) { // This means that every product on the page has a price
         for (let i = 0; i < productTittleArr.length; i++) {
             let comb = [];
             comb[0] = productTittleArr[i];
             comb[1] = productPriceArr[i];
             result = result.concat(comb[0] + "    " + comb[1]);
-            console.log(comb);
         }
     } else {
-
+        var j = 0;
+        for (let i = 0; i < productTittleArr.length; i++) {
+            if (productTittleArr[i].includes("on Select")) { // In amazon, if this product title includes on select, this product do not have price -> set it as 0
+                let comb = [];
+                comb[0] = productTittleArr[i];
+                comb[1] = "C$0";
+                result = result.concat(comb[0] + "    " + comb[1]);
+            } else {
+                let comb = [];
+                comb[0] = productTittleArr[i];
+                comb[1] = productPriceArr[j];
+                result = result.concat(comb[0] + "    " + comb[1]);
+                j = j + 1;
+            }
+        }
     }
     return result;
 }
@@ -107,7 +116,7 @@ async function writeToFile(content) {
     await fs.appendFileSync("./log/productinfo", content + "\n", function(err) {
         if (err) { return console.log(err); }
     });
-    await console.log("The product info is saved");
+    //await console.log("The product info is saved");
 }
 
 async function getTheTotalPageNum(page, lastPageSel) {
