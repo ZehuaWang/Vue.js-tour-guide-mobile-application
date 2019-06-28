@@ -45,15 +45,20 @@ const puppeteer = require('puppeteer');
     var results = [];
 
     // delete the old file
-    await deleteFile("./log/productinfo");
+    //await deleteFile("./log/productinfo");
 
     // change this 99 to get from the web -> paganation failed
-    for (var i = 0; i < lastPageNum; i++) {
+    for (var i = 0; i < 3; i++) {
         await console.log("Process the " + i + " page");
         await page.waitForSelector(productTittleSel);
         await page.waitForSelector(priceSel);
         await page.waitForSelector(nextBtnSel);
-        results = results.concat(await extractProductTitle(page, productTittleSel)); // another issue, the product and price should be in the same line
+        //results = results.concat(await extractProductTitle(page, productTittleSel)); // another issue, the product and price should be in the same line
+        //results = results.concat(await combineProducttitleAndPrice(page, productTittleSel, priceSel));
+        let productTitleArr = await extractProductTitle(page, productTittleSel);
+        let productPriceArr = await extractProductPrice(page, priceSel);
+        results = await results.concat(await combineProducttitleAndPrice(productTitleArr, productPriceArr));
+        await console.log(results);
         await page.waitFor(600);
         await page.$eval(nextBtnSel, elem => elem.click());
         //await page.waitFor(500);
@@ -80,6 +85,24 @@ async function extractProductPrice(page, productPriceSel) { // issue some select
     return page.$$eval(productPriceSel, as => as.map(a => a.innerText));
 }
 
+// add a function to combine the product title and the product price
+async function combineProducttitleAndPrice(productTittleArr, productPriceArr) {
+    var result = [];
+    if (productTittleArr.length == productPriceArr.length) { // This means that every product on the page has a price 
+
+        for (let i = 0; i < productTittleArr.length; i++) {
+            let comb = [];
+            comb[0] = productTittleArr[i];
+            comb[1] = productPriceArr[i];
+            result = result.concat(comb[0] + "    " + comb[1]);
+            console.log(comb);
+        }
+    } else {
+
+    }
+    return result;
+}
+
 async function writeToFile(content) {
     await fs.appendFileSync("./log/productinfo", content + "\n", function(err) {
         if (err) { return console.log(err); }
@@ -92,9 +115,9 @@ async function getTheTotalPageNum(page, lastPageSel) {
 }
 
 async function deleteFile(filePath) {
-    await fs.unlink(filePath, function (err) {
-        if (err) throw err;
+    await fs.unlink(filePath, function(err) {
+        if (err) { return console.log(err); }
         // if no error, file has been deleted successfully
         console.log('File deleted!');
-    });  
+    });
 }
