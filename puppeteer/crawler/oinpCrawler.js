@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const nodemailer = require('nodemailer');
 const schedule = require('node-schedule');
 const os = require('os');
-(async() => {
+module.exports = (async() => {
 
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
@@ -30,7 +30,7 @@ const os = require('os');
     await sendEmail(titleArr, dateArr);
 
     await browser.close();
-})();
+});
 
 async function getNewsTitle(page, titleSel) {
     return page.$$eval(titleSel, as => as.map(a => a.innerText));
@@ -72,7 +72,7 @@ async function changeLineForArr(arr) {
     let res = '';
 
     for (let i = 0; i < arr.length; i++) {
-        res = res + arr[i] + os.EOL + os.EOL;
+        res = os.EOL+ os.EOL + res + arr[i] + os.EOL + os.EOL;
     }
 
     //console.log(res);
