@@ -51,10 +51,11 @@ async function sendEmail(info, date) {
 
     // 'zilijing123@gmail.com' -> middle gmail
     // 'transforminottawa@gmail.com' -> Eric gmail
+    // 'rioaxi0319@gmail.com' -> Xi Yu
     var mailOptions = {
         from: 'zehuawang1994@gmail.com',
-        to: 'transforminottawa@gmail.com',
-        subject: 'OINP News',
+        to: 'rioaxi0319@gmail.com',
+        subject: 'OINP News Has an Update',
         text: contentText
     };
 
@@ -72,7 +73,7 @@ async function changeLineForArr(arr) {
     let res = '';
 
     for (let i = 0; i < arr.length; i++) {
-        res = os.EOL+ os.EOL + res + arr[i] + os.EOL + os.EOL;
+        res = os.EOL + os.EOL + res + arr[i] + os.EOL + os.EOL;
     }
 
     //console.log(res);
