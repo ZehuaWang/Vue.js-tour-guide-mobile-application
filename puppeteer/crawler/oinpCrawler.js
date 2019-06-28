@@ -54,7 +54,7 @@ async function sendEmail(info, date) {
     // 'rioaxi0319@gmail.com' -> Xi Yu
     var mailOptions = {
         from: 'zehuawang1994@gmail.com',
-        to: 'rioaxi0319@gmail.com',
+        to: 'rioaxi0319@gmail.com,transforminottawa@gmail.com',
         subject: 'OINP News Has an Update',
         text: contentText
     };
