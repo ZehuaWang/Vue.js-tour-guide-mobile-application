@@ -45,7 +45,7 @@ async function sendEmail(info, date) {
         service: 'gmail',
         auth: {
             user: 'zehuawang1994@gmail.com',
-            pass: '839908858'
+            pass: 'CA123456ca@'
         }
     });
 
