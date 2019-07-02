@@ -16,6 +16,7 @@
         name: 'HomeSwiper',
         data () {
             return {
+                // Test brunch 
                 swiperOption: {
                     pagination: '.swiper-pagination',
                     loop: true
