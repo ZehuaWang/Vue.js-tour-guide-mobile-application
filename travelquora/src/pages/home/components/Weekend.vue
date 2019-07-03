@@ -28,14 +28,14 @@
                 desc: '在帝都过周末，不仅仅是城中游'
             },{
                 id: '0002',
-                imgUrl: 'http://img1.qunarzz.com/sight/source/1811/f3/86173f863bef61.jpg_r_640x214_52b003ac.jpg',
-                title: '北京欢乐谷',
-                desc: '亚洲唯一飞行式过山车等你来挑战'
+                imgUrl: 'http://img1.qunarzz.com/sight/source/1505/53/02091f1ee43d0a.jpg_r_640x214_2e3256b1.jpg',
+                title: '北京清凉避暑胜地',
+                desc: '到大自然中享受“天然空调”的清凉'
             },{
                 id: '0003',
-                imgUrl: 'http://img1.qunarzz.com/sight/source/1811/f3/86173f863bef61.jpg_r_640x214_52b003ac.jpg',
-                title: '长城',
-                desc: '不到长城非好汉'
+                imgUrl: 'http://img1.qunarzz.com/sight/source/1811/7e/476589267ebb41.jpg_r_640x214_bf599709.jpg',
+                title: '京城溜娃必去',
+                desc: '德智体美劳全面发展的亲子日，这些地方该去看看…'
             }]
             }
         }
