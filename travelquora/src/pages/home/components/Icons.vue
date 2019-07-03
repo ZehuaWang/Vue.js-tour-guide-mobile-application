@@ -48,6 +48,7 @@
 
 <style lang="stylus" scoped>
     @import '~styles/varibles.styl'
+    @import '~styles/mixins.styl'
     .icons >>> .swiper-container
         height : 0
         padding-bottom: 50%
@@ -80,4 +81,6 @@
             text-align: center
             line-height : .44rem
             color: $darkTextColor
+            ellipsis()
+
 </style>
