@@ -2,6 +2,11 @@
     <div class="list">
         <div class="area">
             <div class="title border-topbottom">当前城市</div>
+            <div class="button-list">
+                <div class="button-wrapper">
+                    <div class="button">北京</div>
+                </div>
+            </div>
         </div>
         <div class="area">
             <div class="title border-topbottom">热门城市</div>
@@ -32,4 +37,9 @@ export default {
         padidng-left: .2rem
         color : #666
         font-size: .26rem
+    .button-list
+        padding: .1rem
+        .button
+            float: left
+            width: 33.33%
 </style>
