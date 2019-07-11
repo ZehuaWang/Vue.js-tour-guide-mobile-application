@@ -32,8 +32,13 @@
         },
         data () {
             return {
-                touchStatus : false
+                touchStatus : false,
+                startY : 0,
+                timert : null
             }
+        },
+        updated () {
+            this.startY = this.$refs['A'][0].offsetTop;
         },
         methods: {
             handleLetterClick (e) {
@@ -44,13 +49,17 @@
             },
             handleTouchMove (e) {
                 if(this.touchStatus) {
-                    const startY = this.$refs['A'][0].offsetTop;
+                    if(this.timert) {
+                        clearTimeout(this.timert);
+                    }
+                    this.timert = setTimeout(()=> {
                     const touchY = e.touches[0].clientY - 79;
-                    const index = Math.floor((touchY - startY) / 20);
+                    const index = Math.floor((touchY - this.startY) / 20);
                     console.log(index);
                     if(index >= 0 && index < this.letters.length) {
                         this.$emit('change', this.letters[index]);
                     }
+                    },16);
                 }
             },
             handleTouchEnd () {
