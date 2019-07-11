@@ -15,3 +15,4 @@ class Derived extends Abstract {
 
 //const a = new Abstract();
 const b = new Derived();
+console.log(b.constructor);
