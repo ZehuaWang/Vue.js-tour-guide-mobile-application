@@ -2,9 +2,9 @@ var ratePerYear = 2.97 / 100;
 
 var ratePerMonth = ratePerYear / 12;
 
-var principal = 250000;
+var principal = 400000;
 
-var payYear = 10;
+var payYear = 25;
 
 var payTime = payYear * 12;
 
