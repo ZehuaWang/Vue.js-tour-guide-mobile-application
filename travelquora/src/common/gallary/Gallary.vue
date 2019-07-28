@@ -26,4 +26,5 @@ export default {
         background: #000
         .wrapper
             background: #fff
+            
 </style>
