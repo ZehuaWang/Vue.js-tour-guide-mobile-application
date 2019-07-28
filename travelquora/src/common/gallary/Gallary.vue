@@ -3,12 +3,9 @@
         <div class="wrapper">
             <swiper :options="swiperOptions">
             <!-- slides -->
-            <swiper-slide>
-                <img class="gallary-img" src="http://img1.qunarzz.com/wugc/p123/201211/19/a2045d091f02b25493835fbb.png_350x240_cf4cd08e.png">
-            </swiper-slide>
-            <swiper-slide>
-                <img class="gallary-img" src="http://img1.qunarzz.com/sight/p0/1410/9d/fe8109ab5df1c9c324e74284fa802e72.water.jpg_350x240_8571d9ed.jpg">
-            </swiper-slide>            
+            <swiper-slide v-for="(item,index) in imgs" :key="index">
+                <img class="gallary-img" :src="item">
+            </swiper-slide>          
             <!-- Optional controls -->
             <div class="swiper-pagination"  slot="pagination"></div>
             </swiper>
@@ -19,6 +16,14 @@
 <script>
 export default {
     name: 'CommonGallary',
+    props: {
+        imgs: {
+            type: Array,
+            default() {
+                return []
+            }
+        }
+    },
     data() {
         return {
             swiperOptions: {
@@ -31,6 +36,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+    .container >>> .swiper-container
+        overflow : inherit
     .container
         display : flex
         flex-direction : column
@@ -43,10 +50,12 @@ export default {
         bottom: 0
         background: #000
         .wrapper
-            overflow : hidden
             height: 0
             width: 100%
             padding-bottom: 100%
             .gallary-img
                 width : 100%
+            .swiper-pagination
+                color: #fff
+                bottom : -1 rem
 </style>
