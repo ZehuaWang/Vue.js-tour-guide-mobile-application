@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="wrapper">
-            <swiper>
+            <swiper :options="swiperOptions">
             <!-- slides -->
             <swiper-slide>
                 <img class="gallary-img" src="http://img1.qunarzz.com/wugc/p123/201211/19/a2045d091f02b25493835fbb.png_350x240_cf4cd08e.png">
@@ -10,7 +10,7 @@
                 <img class="gallary-img" src="http://img1.qunarzz.com/sight/p0/1410/9d/fe8109ab5df1c9c324e74284fa802e72.water.jpg_350x240_8571d9ed.jpg">
             </swiper-slide>            
             <!-- Optional controls -->
-            <!--<div class="swiper-pagination"  slot="pagination"></div>-->
+            <div class="swiper-pagination"  slot="pagination"></div>
             </swiper>
             </div>
     </div>
@@ -18,7 +18,15 @@
 
 <script>
 export default {
-    name: 'CommonGallary'    
+    name: 'CommonGallary',
+    data() {
+        return {
+            swiperOptions: {
+                pagination: '.swiper-pagination',
+                paginationType: 'fraction'
+            }
+        }
+    }    
 }
 </script>
 
