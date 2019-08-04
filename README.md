@@ -2,4 +2,4 @@
 
 Rendering On Phone
 
-![image](https://github.com/ZehuaWang/TaoTao_ShoppingSite/blob/master/pic/system.png)
+![image](https://github.com/ZehuaWang/Vue.js-tour-guide-mobile-application/blob/master/pic/firstpage.gif)
