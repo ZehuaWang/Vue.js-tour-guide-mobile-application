@@ -9,7 +9,7 @@
             <span class="item-title-icon"></span>
             {{item.title}}
         </div>
-        <div v-if="item.children">
+        <div v-if="item.children" class="item-children">
             <detail-list :list="item.children">
 
             </detail-list>
@@ -44,4 +44,8 @@ export default {
         font-size: .32rem
         padding: 0 .2rem
     }
+
+    .item-children
+        padding: 0 .2rem
+
 </style>
