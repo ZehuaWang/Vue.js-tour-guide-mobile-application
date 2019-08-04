@@ -1,8 +1,8 @@
-var ratePerYear = 2.97 / 100;
+var ratePerYear = 2.85 / 100;
 
 var ratePerMonth = ratePerYear / 12;
 
-var principal = 400000;
+var principal = 247000;
 
 var payYear = 25;
 
