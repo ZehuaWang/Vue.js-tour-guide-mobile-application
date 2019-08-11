@@ -1,5 +1,11 @@
 ### Where to go App
 
+Project Description
+
+Introduce Vue.JS frontend framework, separate the frontend and backend to build the SPA. Use the new feature of ES and Stylus. The project includes :
+
+
+
 Rendering On Phone
 
 ![image](https://github.com/ZehuaWang/Vue.js-tour-guide-mobile-application/blob/master/pic/firstpage.gif)
