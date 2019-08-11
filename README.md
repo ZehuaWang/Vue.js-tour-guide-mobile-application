@@ -2,7 +2,8 @@
 
 Project Description
 
-Introduce Vue.JS frontend framework, separate the frontend and backend to build the SPA. Use the new feature of ES and Stylus. The project includes :
+Introduce Vue.JS frontend framework, separate the frontend and backend to build the SPA. Use the new feature of ES and Stylus. The project 
+<br>includes :
 
 
 
